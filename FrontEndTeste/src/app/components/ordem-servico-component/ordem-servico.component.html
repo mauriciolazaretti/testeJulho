@@ -1,0 +1,104 @@
+<div>
+  <div *ngIf="mostrar">
+    <h1>Ordem de serviço</h1>
+    <div class="form-group col-3">
+      <label>Convenio</label>
+      <select class="form-control" [(ngModel)]="ordemServico.convenio">
+        <option value="UNIMED">
+          UNIMED
+        </option>
+        <option value="HBSAUDE">
+          HBSAUDE
+        </option>
+      </select>
+
+    </div>
+
+    <div class="form-group col-3">
+      <label>Medico</label>
+      <select class="form-control" [(ngModel)]="ordemServico.medicoId">
+        <option *ngFor="let medico of listMedicos" [value]="medico.id">
+          {{medico.nome}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-3">
+      <label>Posto de coleta</label>
+      <select class="form-control" [(ngModel)]="ordemServico.postoId">
+        <option *ngFor="let posto of listPostos" [ngValue]="posto.id">
+          {{posto.descricao}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-3">
+      <label>Paciente</label>
+      <select class="form-control" [(ngModel)]="ordemServico.pacienteId">
+        <option *ngFor="let paciente of listPacientes" [value]="paciente.id">
+          {{paciente.nome}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-3">
+      <label>Data</label>
+      <input type="date" class="form-control" [(ngModel)]="ordemServico.data">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-4">
+        <label>Exames</label>
+        <select class="form-control" [(ngModel)]="exameAdd">
+          <option *ngFor="let exame of listExames" [ngValue]="exame.id">
+            {{exame.descricao}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-4">
+        <br/>
+        <input type="button" class="btn btn-success" value="Adicionar" (click)="adicionarExame()"/>
+      </div>
+
+    </div>
+
+
+      <div class="form-group col-12">
+        <label style="margin-right: 10px;">Lista de exames adicionados</label>
+        <ul>
+          <li *ngFor="let exame of listExamesAdd">{{exame.descricao}} <button class="btn btn-danger" (click)="deletarExame(exame)">Excluir</button></li>
+        </ul>
+      </div>
+      <br/>
+      <br/>
+      <div class="form-row">
+        <div class="form-group col-1">
+          <input type="button" class="btn btn-warning" value="Cancelar" (click)="cancelar()"/>
+        </div>
+        <div class="form-group col-1">
+          <input type="button" class="btn btn-primary" value="Salvar" (click)="salvar()"/>
+        </div>
+      </div>
+
+  </div>
+  <div *ngIf="!mostrar">
+    <button type="button" class="btn btn-primary" (click)="novaOrdem()" >Novo</button>
+    <table class="table">
+      <thead>
+        <th>Paciente</th>
+        <th>Médico</th>
+        <th>Data</th>
+        <th>Opções</th>
+      </thead>
+      <tbody>
+        <tr *ngIf="listagem.length == 0">
+          <td colspan="4">Sem dados</td>
+        </tr>
+        <tr *ngFor="let ordem of listagem">
+          <td>{{ordem.paciente.nome}}</td>
+          <td>{{ordem.medico.nome}}</td>
+          <td>{{ordem.data | date: 'dd/MM/yyyy'}}</td>
+          <td><button class="btn btn-primary" (click)="editOrdem(ordem)">Editar</button> <button class="btn btn-danger" (click)="deletar(ordem)">Excluir</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
