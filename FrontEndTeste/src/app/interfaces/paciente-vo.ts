@@ -1,4 +1,4 @@
-export class PacienteVO {
+export interface PacienteVO {
   id: number;
   nome: string;
   sexo: string;

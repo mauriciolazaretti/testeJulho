@@ -1,0 +1,21 @@
+<div>
+  <table class="table">
+    <thead>
+      <th>Paciente</th>
+      <th>Médico</th>
+      <th>Data</th>
+      <th>Opções</th>
+    </thead>
+    <tbody>
+      <tr *ngIf="listagem.length == 0">
+        <td colspan="4">Sem dados</td>
+      </tr>
+      <tr *ngFor="let ordem of listagem">
+        <td>{{ordem.paciente.nome}}</td>
+        <td>{{ordem.medico.nome}}</td>
+        <td>{{ordem.data | date: 'dd/MM/yyyy'}}</td>
+        <td><button class="btn btn-primary" (click)="editOrdem(ordem)">Editar</button> <button class="btn btn-danger" (click)="deletar(ordem)">Excluir</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

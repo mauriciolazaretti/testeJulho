@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { OrdemServicoVO } from '../classes/ordem-servico-vo';
-import { OrdemServicoObjVO } from '../classes/ordem-servico-obj-vo';
+import { OrdemServicoVO } from '../interfaces/ordem-servico-vo';
+import { OrdemServicoObjVO } from '../interfaces/ordem-servico-obj-vo';
 @Injectable({
   providedIn: 'root'
 })

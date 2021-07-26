@@ -3,7 +3,7 @@ import { PacienteVO } from "./paciente-vo";
 import { PostoVO } from "./posto-vo";
 import { ServicoExameVO } from "./servico-exame-vo";
 
-export class OrdemServicoObjVO {
+export interface OrdemServicoObjVO {
   id: number;
   data: string;
   paciente: PacienteVO;

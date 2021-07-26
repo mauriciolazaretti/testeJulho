@@ -1,4 +1,4 @@
-export class OrdemServicoVO {
+export interface OrdemServicoVO {
   id: number;
   medicoId:number;
   postoId: number;

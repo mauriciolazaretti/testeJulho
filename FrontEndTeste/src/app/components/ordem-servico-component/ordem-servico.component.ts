@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ExameVO } from 'src/app/classes/exame-vo';
-import { MedicoVO } from 'src/app/classes/medico-vo';
-import { OrdemServicoObjVO } from 'src/app/classes/ordem-servico-obj-vo';
-import { OrdemServicoVO } from 'src/app/classes/ordem-servico-vo';
-import { PacienteVO } from 'src/app/classes/paciente-vo';
-import { PostoVO } from 'src/app/classes/posto-vo';
+import { ExameVO } from 'src/app/interfaces/exame-vo';
+import { MedicoVO } from 'src/app/interfaces/medico-vo';
+import { OrdemServicoObjVO } from 'src/app/interfaces/ordem-servico-obj-vo';
+import { OrdemServicoVO } from 'src/app/interfaces/ordem-servico-vo';
+import { PacienteVO } from 'src/app/interfaces/paciente-vo';
+import { PostoVO } from 'src/app/interfaces/posto-vo';
 import { OrdemServicoService } from 'src/app/services/ordem-servico.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class OrdemServicoComponent implements OnInit {
 
   constructor(private ordemService : OrdemServicoService) { }
   mostrar: Boolean = false;
-  ordemServico : OrdemServicoVO = new OrdemServicoVO();
+  ordemServico : OrdemServicoVO = {medicoId: null, postoId: null, convenio: null, data: '', exames: [], id: null, pacienteId: null};
   listMedicos: Array<MedicoVO>;
   listPacientes: Array<PacienteVO>;
   listPostos: Array<PostoVO>;
@@ -31,21 +31,17 @@ export class OrdemServicoComponent implements OnInit {
     this.ordemService.get("listar_postos").subscribe((data : Array<PostoVO>) => this.listPostos = data);
     this.ordemService.get("listar_exames").subscribe((data : Array<ExameVO>) => this.listExames = data);
   }
-  adicionarExame(){
-    console.log(this.exameAdd);
-    let exame: ExameVO = this.listExames.find(o => o.id == this.exameAdd);
-    this.listExamesAdd.push(exame);
-  }
+
 
   novaOrdem(){
-    this.ordemServico = new OrdemServicoVO();
+    this.ordemServico = {medicoId: null, postoId: null, convenio: '', data: '', exames: [], id: null, pacienteId: null};
     this.mostrar = true;
   }
 
-  salvar(){
-    this.ordemServico.exames = this.listExamesAdd.map(o => o.id);
+  salvar(ordemServico : OrdemServicoVO){
+
     let retorno : OrdemServicoObjVO;
-    this.ordemService.post(this.ordemServico).subscribe((data: OrdemServicoObjVO) =>  {
+    this.ordemService.post(ordemServico).subscribe((data: OrdemServicoObjVO) =>  {
       console.log(data);
       this.listExamesAdd = [];
       this.listarOrdens();
@@ -70,7 +66,7 @@ export class OrdemServicoComponent implements OnInit {
   }
   deletar(ordem: OrdemServicoObjVO){
     console.log(ordem);
-    let ordemVO: OrdemServicoVO = new OrdemServicoVO();
+    let ordemVO: OrdemServicoVO = {medicoId: null, postoId: null, convenio: '', data: '', exames: [], id: null, pacienteId: null};
     ordemVO.id = ordem.id;
     this.ordemService.delete(ordemVO).subscribe((data)=> {
       alert("Excluido com sucesso");
@@ -79,11 +75,7 @@ export class OrdemServicoComponent implements OnInit {
     },(err) => alert(err.message));
   }
 
-  deletarExame(exame: ExameVO){
-    console.log(this.listExamesAdd);
-    this.listExamesAdd.splice(this.listExamesAdd.indexOf(exame),1);
-    console.log(this.listExamesAdd);
-  }
+
 
   cancelar(){
     this.mostrar = false;

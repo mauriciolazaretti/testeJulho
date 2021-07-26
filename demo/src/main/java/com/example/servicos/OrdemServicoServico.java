@@ -49,8 +49,6 @@ public class OrdemServicoServico implements Serializable  {
     private PostoColetaRepositorio postoColetaRepositorio;
     @Autowired
     private ExameRepositorio exameRepositorio;
-    @Autowired
-    private OrdemServicoExameRepositorio servicoExameRepositorio;
     public List<OrdemServico> Listar(){
         return ordemServicoRepositorio.findAll();
     }
@@ -60,50 +58,69 @@ public class OrdemServicoServico implements Serializable  {
             return false;
         OrdemServico ordemServico = ordemServicoRepositorio.getById(ordem.getId());
         
-        servicoExameRepositorio.deleteAllInBatch(ordemServico.getOrdensExames());
         ordemServicoRepositorio.delete(ordemServico);
         return true;
         }catch(Exception ex){
             return false;
         }
     }
-    public OrdemServico Salvar(OrdemServicoVO ordemServicoVO) throws Exception{
-        if(ordemServicoVO == null)
-            return null;
 
-        if(ordemServicoVO.getMedicoId() == null)
-            throw new Exception("Medico inválido");
-        if(ordemServicoVO.getPacienteId() == null)
-            throw new Exception("Paciente inválido");
-        if(ordemServicoVO.getPostoId() == null)
-            throw new Exception("Posto de coleta inválido");
-        PostoColeta posto = postoColetaRepositorio.getById(ordemServicoVO.getPostoId());
-        Paciente paciente = pacienteRepositorio.getById(ordemServicoVO.getPacienteId());
-        Medico medico = medicoRepositorio.getById(ordemServicoVO.getMedicoId());
+    private OrdemServico BuscarOuCriaInstancia(Integer id){
+        if(id == null)
+            return new OrdemServico();
+        return ordemServicoRepositorio.getById(id);
+    }
 
-        
-        OrdemServico ordemServico = ordemServicoVO.getId() != null ? ordemServicoRepositorio.getById(ordemServicoVO.getId()) : new OrdemServico(ordemServicoVO.getData(), paciente, medico, posto, ordemServicoVO.getConvenio());
-        
-        
 
+    private OrdemServico PreencheObjeto(OrdemServicoVO ordemServicoVO, OrdemServico ordemServico){
         List<OrdemServicoExame> listaOrdemExames = new ArrayList<>();
-        
         List<Exame> listaExames = exameRepositorio.findAllById(ordemServicoVO.getExames());
         for(Exame ex : listaExames){
 
             listaOrdemExames.add(new OrdemServicoExame(ex, ordemServico, ex.getPreco() ));
         }
+
+        PostoColeta posto = postoColetaRepositorio.getById(ordemServicoVO.getPostoId());
+        Paciente paciente = pacienteRepositorio.getById(ordemServicoVO.getPacienteId());
+        Medico medico = medicoRepositorio.getById(ordemServicoVO.getMedicoId());
+        ordemServico.setConvenio(ordemServicoVO.getConvenio());
+        ordemServico.setData(ordemServicoVO.getData());
+        ordemServico.setPostoColeta(posto);
+        ordemServico.setPaciente(paciente);
+        ordemServico.setMedico(medico);
         if(ordemServicoVO.getId() != null){
-            ordemServico.setConvenio(ordemServicoVO.getConvenio());
-            ordemServico.setData(ordemServicoVO.getData());
-            ordemServico.setPostoColeta(posto);
-            ordemServico.setPaciente(paciente);
-            ordemServico.setMedico(medico);
+            
             ordemServico.getOrdensExames().clear();
             ordemServico.getOrdensExames().addAll(listaOrdemExames);
         }else{
             ordemServico.setOrdensExames(listaOrdemExames);
         }
+        return ordemServico;
+       
+    }
+
+    private String ValidarDados(OrdemServicoVO ordemServicoVO){
+        if(ordemServicoVO.getMedicoId() == null)
+            return "Médico inválido";
+        if(ordemServicoVO.getPacienteId() == null)
+            return "Paciente inválido";
+        if(ordemServicoVO.getPostoId() == null)
+            return "Posto de coleta inválido";
+        return null;
+    }
+
+    public OrdemServico Salvar(OrdemServicoVO ordemServicoVO) throws Exception {
+        if(ordemServicoVO == null)
+            return null;
+
+        String validacaoMsg = this.ValidarDados(ordemServicoVO);
+        if(validacaoMsg != null)
+            throw new Exception(validacaoMsg);
+        
+        OrdemServico ordemServico = this.BuscarOuCriaInstancia(ordemServicoVO.getId());
+
+        ordemServico = this.PreencheObjeto(ordemServicoVO, ordemServico);
+        
         ordemServicoRepositorio.save(ordemServico);   
         return ordemServico;
     }
