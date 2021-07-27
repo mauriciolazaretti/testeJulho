@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { OrdemServicoService } from './services/ordem-servico.service';
+import { ServiceOrderService } from './services/service-order.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OrdemServicoComponent } from './components/ordem-servico-component/ordem-servico.component';
 import { ListagemComponent } from './components/ordem-servico-component/listagem/listagem.component';

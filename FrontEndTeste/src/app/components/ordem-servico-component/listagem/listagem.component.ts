@@ -1,7 +1,7 @@
 import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
-import { OrdemServicoObjVO } from 'src/app/interfaces/ordem-servico-obj-vo';
+import { ServiceOrderObjVO } from 'src/app/interfaces/service-order-obj-vo';
 
 @Component({
   selector: 'app-listagem',
@@ -10,18 +10,18 @@ import { OrdemServicoObjVO } from 'src/app/interfaces/ordem-servico-obj-vo';
 })
 export class ListagemComponent implements OnInit {
   @Input()
-  listagem: Array<OrdemServicoObjVO>;
-  @Output() edicao = new EventEmitter<OrdemServicoObjVO>();
-  @Output() exclusao = new EventEmitter<OrdemServicoObjVO>();
+  list: Array<ServiceOrderObjVO>;
+  @Output() edicao = new EventEmitter<ServiceOrderObjVO>();
+  @Output() exclusao = new EventEmitter<ServiceOrderObjVO>();
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  editOrdem(ordem : OrdemServicoObjVO){
+  edit(ordem : ServiceOrderObjVO){
     this.edicao.emit(ordem);
   }
-  deletar(ordem : OrdemServicoObjVO){
+  delete(ordem : ServiceOrderObjVO){
     this.exclusao.emit(ordem);
   }
 

@@ -9,9 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity(name="postoColeta")
-@Table(name = "postos")
-public class PostoColeta implements  Serializable{
+@Entity(name="collectionPost")
+@Table(name = "collectionPost")
+public class CollectionPost implements  Serializable{
 
     /**
      *
@@ -21,16 +21,16 @@ public class PostoColeta implements  Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(length=100, nullable=false)
-    private String descricao;
+    private String description;
     @Column(length=100, nullable=false)
-    private String endereco;
+    private String address;
 
-    public PostoColeta() {
+    public CollectionPost() {
     }
 
-    public PostoColeta( String descricao, String endereco) {
-        this.descricao = descricao;
-        this.endereco = endereco;
+    public CollectionPost( String description, String address) {
+        this.description = description;
+        this.address = address;
     }
 
     public Integer getId() {
@@ -41,20 +41,20 @@ public class PostoColeta implements  Serializable{
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String descricao) {
+        this.description = descricao;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getAddress() {
+        return address;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setAddress(String endereco) {
+        this.address = endereco;
     }
 
 

@@ -9,9 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity(name="medico")
-@Table(name = "medicos")
-public class Medico implements  Serializable{
+@Entity(name="doctor")
+@Table(name = "doctors")
+public class Doctor implements  Serializable{
 
     /**
      *
@@ -24,16 +24,16 @@ public class Medico implements  Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(length=100, nullable=false)
-    private String nome;
+    private String name;
     @Column(length=100, nullable=false)
-    private String especialidade;
+    private String specialty;
 
-    public Medico() {
+    public Doctor() {
     }
 
-    public Medico(String nome, String especialidade) {
-        this.nome = nome;
-        this.especialidade = especialidade;
+    public Doctor(String name, String specialty) {
+        this.name = name;
+        this.specialty = specialty;
     }
 
 
@@ -45,20 +45,20 @@ public class Medico implements  Serializable{
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getEspecialidade() {
-        return especialidade;
+    public String getSpecialty() {
+        return specialty;
     }
 
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
 
    

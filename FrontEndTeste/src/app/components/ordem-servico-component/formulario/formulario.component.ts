@@ -1,10 +1,10 @@
 import { Input, Output } from '@angular/core';
 import { Component, OnInit,EventEmitter } from '@angular/core';
-import { ExameVO } from 'src/app/interfaces/exame-vo';
-import { MedicoVO } from 'src/app/interfaces/medico-vo';
-import { OrdemServicoVO } from 'src/app/interfaces/ordem-servico-vo';
-import { PacienteVO } from 'src/app/interfaces/paciente-vo';
-import { PostoVO } from 'src/app/interfaces/posto-vo';
+import { ExamVO } from 'src/app/interfaces/exam-vo';
+import { DoctorVO } from 'src/app/interfaces/doctor-vo';
+import { ServiceOrderVO } from 'src/app/interfaces/service-order-vo';
+import { PatientVO } from 'src/app/interfaces/patient-vo';
+import { CollectionPostVO } from 'src/app/interfaces/collection-post-vo';
 
 @Component({
   selector: 'app-formulario',
@@ -13,43 +13,43 @@ import { PostoVO } from 'src/app/interfaces/posto-vo';
 })
 export class FormularioComponent implements OnInit {
   @Input()
-  ordemServico : OrdemServicoVO;
+  serviceOrder : ServiceOrderVO;
   @Input()
-  listMedicos: Array<MedicoVO>;
+  listDoctors: Array<DoctorVO>;
   @Input()
-  listPacientes: Array<PacienteVO>;
+  listPatients: Array<PatientVO>;
   @Input()
-  listPostos: Array<PostoVO>;
+  listPosts: Array<CollectionPostVO>;
   @Input()
-  listExames: Array<ExameVO>;
-  exameAdd: number;
+  listExams: Array<ExamVO>;
+  examAdd: number;
   @Input()
-  listExamesAdd: Array<ExameVO> = [];
+  listExamsAdd: Array<ExamVO> = [];
 
-  @Output() eventoSalvar = new EventEmitter<OrdemServicoVO>();
+  @Output() eventoSalvar = new EventEmitter<ServiceOrderVO>();
   @Output() eventoCancelar = new EventEmitter<void>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
-  adicionarExame(){
-    console.log(this.exameAdd);
-    let exame: ExameVO = this.listExames.find(o => o.id == this.exameAdd);
-    this.listExamesAdd.push(exame);
+  addExam(){
+    console.log(this.examAdd);
+    let exame: ExamVO = this.listExams.find(o => o.id == this.examAdd);
+    this.listExamsAdd.push(exame);
   }
-  deletarExame(exame: ExameVO){
-    console.log(this.listExamesAdd);
-    this.listExamesAdd.splice(this.listExamesAdd.indexOf(exame),1);
-    console.log(this.listExamesAdd);
-  }
-
-  salvar(){
-    this.ordemServico.exames = this.listExamesAdd.map(o => o.id);
-    this.eventoSalvar.emit(this.ordemServico);
+  removeExam(exame: ExamVO){
+    console.log(this.listExamsAdd);
+    this.listExamsAdd.splice(this.listExamsAdd.indexOf(exame),1);
+    console.log(this.listExamsAdd);
   }
 
-  cancelar(){
+  save(){
+    this.serviceOrder.exams = this.listExamsAdd.map(o => o.id);
+    this.eventoSalvar.emit(this.serviceOrder);
+  }
+
+  cancel(){
     this.eventoCancelar.emit();
   }
 }

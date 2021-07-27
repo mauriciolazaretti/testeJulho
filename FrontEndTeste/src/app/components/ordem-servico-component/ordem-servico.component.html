@@ -1,21 +1,21 @@
 <div>
-  <div *ngIf="mostrar">
+  <div *ngIf="show">
     <h1>Ordem de serviço</h1>
     <app-formulario
-    [ordemServico]="ordemServico"
-    [listExames]="listExames"
-    [listMedicos]="listMedicos"
-    [listPostos]="listPostos"
-    [listPacientes]="listPacientes"
-    [listExamesAdd]="listExamesAdd"
-    (eventoCancelar)="cancelar()"
-    (eventoSalvar)="salvar($event)"
+    [serviceOrder]="serviceOrder"
+    [listExams]="listExams"
+    [listDoctors]="listDoctors"
+    [listPosts]="listPosts"
+    [listPatients]="listPatients"
+    [listExamsAdd]="listExamsAdd"
+    (eventoCancelar)="cancel()"
+    (eventoSalvar)="save($event)"
     ></app-formulario>
 
   </div>
-  <div *ngIf="!mostrar">
-    <button type="button" class="btn btn-primary" (click)="novaOrdem()" >Novo</button>
-    <app-listagem [listagem]="listagem" (edicao)="editOrdem($event)" (exclusao)="deletar($event)"></app-listagem>
+  <div *ngIf="!show">
+    <button type="button" class="btn btn-primary" (click)="new()" >Novo</button>
+    <app-listagem [list]="list" (edicao)="edit($event)" (exclusao)="delete($event)"></app-listagem>
 
   </div>
 </div>

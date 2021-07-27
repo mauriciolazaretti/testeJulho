@@ -1,7 +1,7 @@
 <div>
   <div class="form-group col-3">
     <label>Convenio</label>
-    <select class="form-control" [(ngModel)]="ordemServico.convenio">
+    <select class="form-control" [(ngModel)]="serviceOrder.healthInsurance">
       <option value="UNIMED">
         UNIMED
       </option>
@@ -14,44 +14,44 @@
 
   <div class="form-group col-3">
     <label>Medico</label>
-    <select class="form-control" [(ngModel)]="ordemServico.medicoId">
-      <option *ngFor="let medico of listMedicos" [value]="medico.id">
-        {{medico.nome}}
+    <select class="form-control" [(ngModel)]="serviceOrder.doctorId">
+      <option *ngFor="let doctor of listDoctors" [value]="doctor.id">
+        {{doctor.name}}
       </option>
     </select>
   </div>
   <div class="form-group col-3">
     <label>Posto de coleta</label>
-    <select class="form-control" [(ngModel)]="ordemServico.postoId">
-      <option *ngFor="let posto of listPostos" [ngValue]="posto.id">
-        {{posto.descricao}}
+    <select class="form-control" [(ngModel)]="serviceOrder.postId">
+      <option *ngFor="let post of listPosts" [ngValue]="post.id">
+        {{post.description}}
       </option>
     </select>
   </div>
   <div class="form-group col-3">
     <label>Paciente</label>
-    <select class="form-control" [(ngModel)]="ordemServico.pacienteId">
-      <option *ngFor="let paciente of listPacientes" [value]="paciente.id">
-        {{paciente.nome}}
+    <select class="form-control" [(ngModel)]="serviceOrder.patientId">
+      <option *ngFor="let patient of listPatients" [value]="patient.id">
+        {{patient.name}}
       </option>
     </select>
   </div>
   <div class="form-group col-3">
     <label>Data</label>
-    <input type="date" class="form-control" [(ngModel)]="ordemServico.data">
+    <input type="date" class="form-control" [(ngModel)]="serviceOrder.date">
   </div>
   <div class="form-row pl-3">
     <div class="form-group col-4">
       <label>Exames</label>
-      <select class="form-control" [(ngModel)]="exameAdd">
-        <option *ngFor="let exame of listExames" [ngValue]="exame.id">
-          {{exame.descricao}}
+      <select class="form-control" [(ngModel)]="examAdd">
+        <option *ngFor="let exam of listExams" [ngValue]="exam.id">
+          {{exam.description}}
         </option>
       </select>
     </div>
     <div class="form-group col-4">
       <br/>
-      <input type="button" class="btn btn-success" value="Adicionar" (click)="adicionarExame()"/>
+      <input type="button" class="btn btn-success" value="Adicionar" (click)="addExam()"/>
     </div>
 
   </div>
@@ -60,17 +60,17 @@
     <div class="form-group col-12">
       <label style="margin-right: 10px;">Lista de exames adicionados</label>
       <ul>
-        <li *ngFor="let exame of listExamesAdd">{{exame.descricao}} <button class="btn btn-danger" (click)="deletarExame(exame)">Excluir</button></li>
+        <li *ngFor="let exam of listExamsAdd">{{exam.description}} <button class="btn btn-danger" (click)="removeExam(exame)">Excluir</button></li>
       </ul>
     </div>
     <br/>
     <br/>
     <div class="form-row">
       <div class="form-group col-1">
-        <input type="button" class="btn btn-warning" value="Cancelar" (click)="cancelar()"/>
+        <input type="button" class="btn btn-warning" value="Cancelar" (click)="cancel()"/>
       </div>
       <div class="form-group col-1">
-        <input type="button" class="btn btn-primary" value="Salvar" (click)="salvar()"/>
+        <input type="button" class="btn btn-primary" value="Salvar" (click)="save()"/>
       </div>
     </div>
 </div>

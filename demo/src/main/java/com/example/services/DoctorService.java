@@ -1,7 +1,7 @@
-package com.example.servicos;
+package com.example.services;
 
-import com.example.entity.Medico;
-import com.example.repositorio.MedicoRepositorio;
+import com.example.entity.Doctor;
+import com.example.repository.DoctorRepository;
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class MedicoServico implements Serializable {
+public class DoctorService implements Serializable {
     
     /**
      *
@@ -21,10 +21,10 @@ public class MedicoServico implements Serializable {
      */
     
     @Autowired
-    private MedicoRepositorio medicoRepositorio;
+    private DoctorRepository doctorRepository;
 
-    public List<Medico> Listar(){
-        return medicoRepositorio.findAll();
+    public List<Doctor> List(){
+        return doctorRepository.findAll();
     }
 
 
